@@ -41,9 +41,9 @@ impl Decimal for Decimal32 {
     }
 }
 
-impl Into<Decimal32> for String {
-    fn into(self) -> Decimal32 {
-        let is_number = is_number(&self);
+impl From<String> for Decimal32 {
+    fn from(item: String) -> Self {
+        let is_number = is_number(&item);
         if !is_number {
             panic!("Invalid number format");
         }
@@ -51,5 +51,29 @@ impl Into<Decimal32> for String {
         // Assuming the string is a valid number, parse it and create a Decimal32 instance
         // This is a placeholder implementation; you need to replace it with actual parsing logic
         Decimal32::new(false, 0, 0)
+    }
+}
+
+impl From<&str> for Decimal32 {
+    fn from(item: &str) -> Self {
+        let dec = Decimal32::try_from(item);
+        match dec {
+            Ok(decimal) => decimal,
+            Err(error) => panic!("{}", error),
+        }
+    }
+}
+
+impl TryFrom<&String> for Decimal32 {
+    type Error = String;
+
+    fn try_from(value: &String) -> Result<Self, Self::Error> {
+        if !is_number(value) {
+            return Err(String::from("Invalid number format"));
+        }
+
+        // Assuming the string is a valid number, parse it and create a Decimal32 instance
+        // This is a placeholder implementation; actual parsing logic is required
+        Ok(Decimal32::new(false, 0, 0)) // Replace with actual logic
     }
 }
