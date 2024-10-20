@@ -1,0 +1,11 @@
+[package]
+name = "big_number"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+regex = "1.11.0"
+
+[[bin]]
+name = "big_number"
+path = "main.rs"
